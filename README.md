@@ -139,6 +139,16 @@ for c in find_corners(board, ignore_nets=("GND",)):
 - PyPI release
 - pre-commit hook id
 
+## Related tools
+
+Part of a small family of zero-dependency KiCad lint tools:
+
+- [kicad-board-lint](https://github.com/94xhn/kicad-board-lint) — board
+  problems DRC silently accepts: pads with no net, duplicate-pad net
+  mismatches, power tracks too thin for their current (IPC-2221).
+- [kicad-file-doctor](https://github.com/94xhn/kicad-file-doctor) — explains
+  why KiCad rejects or mis-loads a file, with line numbers.
+
 ## 中文简介
 
 零依赖的 KiCad 走线直角检查工具：直接解析 `.kicad_pcb` 文本（不需要安装
