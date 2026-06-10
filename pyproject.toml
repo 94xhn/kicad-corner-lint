@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kicad-corner-lint"
+version = "0.1.0"
+description = "Zero-dependency linter that flags right-angle and acute track corners in KiCad PCB files"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "94xhn" }]
+keywords = ["kicad", "pcb", "lint", "drc", "eda", "ci", "hardware"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.scripts]
+kicad-corner-lint = "kicad_corner_lint.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/94xhn/kicad-corner-lint"
+Issues = "https://github.com/94xhn/kicad-corner-lint/issues"
+Changelog = "https://github.com/94xhn/kicad-corner-lint/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["kicad_corner_lint"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
