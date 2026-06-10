@@ -5,10 +5,16 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](pyproject.toml)
 
 A zero-dependency linter that flags **right-angle and acute track corners** in
-KiCad PCB files. Point it at a `.kicad_pcb`, get a severity-ranked report and a
-CI-friendly exit code. No KiCad installation, no pcbnew bindings, no setup —
-it parses the board file directly, so it runs anywhere Python runs (including
-GitHub Actions and pre-commit hooks).
+KiCad PCB files (KiCad 5 through 10). It walks every pair of track segments
+meeting at a point and classifies the corner angle: 135° corners — standard
+45° routing — pass; right angles (90° ± tolerance) and acute "acid-trap"
+corners (< 89°, including 0° overlapping copper) are errors; anything between
+91° and 134° is a warning. T-junctions are recognised and skipped by default,
+and nets can be excluded by pattern. Reports come as human-readable text or
+JSON with exact board coordinates, and the exit code gates CI. No KiCad
+installation, no pcbnew bindings, no setup — it parses the board file
+directly, so it runs anywhere Python runs (GitHub Actions, pre-commit hooks,
+your laptop).
 
 [中文简介](#中文简介) below.
 
