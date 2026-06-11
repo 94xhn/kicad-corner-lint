@@ -33,9 +33,10 @@ def test_unquoted_and_quoted_atoms_equivalent():
     assert parse("(layer F.Cu)") == parse('(layer "F.Cu")')
 
 
-def test_unbalanced_close_raises():
-    with pytest.raises(ValueError, match="unbalanced"):
-        parse("(a))")
+def test_stray_close_paren_tolerated():
+    # KiCad's own parser skips stray ')' (official demo boards contain
+    # hundreds); match that so boards KiCad opens also parse here.
+    assert parse("(a))") == [["a"]]
 
 
 def test_unbalanced_open_raises():

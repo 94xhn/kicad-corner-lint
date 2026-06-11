@@ -76,6 +76,15 @@ def test_missing_file_exits_2(capsys):
     assert "cannot read" in capsys.readouterr().err
 
 
+def test_bad_file_does_not_block_other_files(tmp_path, capsys):
+    board = tmp_path / "clean.kicad_pcb"
+    board.write_text(CLEAN_BOARD, encoding="utf-8")
+    assert main(["no_such_board.kicad_pcb", str(board)]) == 2
+    captured = capsys.readouterr()
+    assert "cannot read" in captured.err
+    assert "clean.kicad_pcb" in captured.out  # the good file was still checked
+
+
 def test_non_board_file_exits_2(tmp_path, capsys):
     bogus = tmp_path / "x.kicad_pcb"
     bogus.write_text("(kicad_sch)", encoding="utf-8")

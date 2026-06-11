@@ -1,0 +1,6 @@
+- id: kicad-corner-lint
+  name: kicad-corner-lint
+  description: Flag right-angle and acute track corners in KiCad PCB files
+  entry: kicad-corner-lint
+  language: python
+  files: \.kicad_pcb$

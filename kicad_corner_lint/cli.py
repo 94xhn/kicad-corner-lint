@@ -111,16 +111,17 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
 
     results = []
+    file_errors = 0
     for raw in args.boards:
         path = Path(raw)
         try:
             results.append(_check_file(path, args))
         except OSError as exc:
             print(f"error: cannot read {path}: {exc}", file=sys.stderr)
-            return EXIT_USAGE
+            file_errors += 1
         except ValueError as exc:
             print(f"error: {path}: {exc}", file=sys.stderr)
-            return EXIT_USAGE
+            file_errors += 1
 
     total_errors = sum(r["errors"] for r in results)
     total_warnings = sum(r["warnings"] for r in results)
@@ -144,6 +145,8 @@ def main(argv: list[str] | None = None) -> int:
             f"across {len(results)} file(s)"
         )
 
+    if file_errors:
+        return EXIT_USAGE  # an unreadable/unparseable file outranks lint results
     return EXIT_VIOLATIONS if total_errors else EXIT_CLEAN
 
 

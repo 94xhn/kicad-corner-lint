@@ -108,6 +108,16 @@ exit code unless `--strict`.
     kicad-corner-lint hardware/*.kicad_pcb
 ```
 
+### pre-commit
+
+```yaml
+repos:
+  - repo: https://github.com/94xhn/kicad-corner-lint
+    rev: v0.1.0
+    hooks:
+      - id: kicad-corner-lint
+```
+
 ### Python API
 
 ```python

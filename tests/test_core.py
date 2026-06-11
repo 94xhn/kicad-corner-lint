@@ -173,6 +173,20 @@ def test_non_board_file_raises():
         load_board("(kicad_sch (version 1))")
 
 
+def test_orphaned_top_level_segments_adopted():
+    # A stray ')' can close (kicad_pcb ...) early; KiCad still loads such
+    # files (an official demo board ships this way), so segments after the
+    # early close must still be checked.
+    text = (
+        '(kicad_pcb (version 20241229) (net 1 "A"))\n'
+        '(segment (start 0 0) (end 10 0) (width 0.25) (layer "F.Cu") (net 1))\n'
+        '(segment (start 10 0) (end 10 10) (width 0.25) (layer "F.Cu") (net 1))\n'
+    )
+    corners = find_corners(load_board(text))
+    assert len(corners) == 1
+    assert corners[0].kind == "right-angle"
+
+
 # ------------------------------------------- KiCad 10 format (net by name)
 
 KICAD10_HEADER = '(kicad_pcb (version 20250114) (generator "pcbnew")\n'
